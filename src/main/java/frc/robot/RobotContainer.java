@@ -9,7 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -33,7 +33,7 @@ public class RobotContainer {
   
   private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
 
-  WPI_TalonSRX motor = new WPI_TalonSRX(0);
+  WPI_TalonSRX motor = new WPI_TalonSRX(10);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -62,18 +62,20 @@ public class RobotContainer {
     JoystickButton aDriverButton = new JoystickButton(driveController, 1);
     JoystickButton bDriverButton = new JoystickButton(driveController, 2);
     
-    aButton.onTrue(commandify());
+    aButton.whileTrue(commandify(1.0)).onFalse(commandify(0.0));
+    bButton.whileTrue(commandify(-1.0)).onFalse(commandify(0.0));
   }
-   public Command commandify(){
+   public Command commandify(double speed){
     return Commands.run( () -> {
-      literallyAnything();
+      literallyAnything(speed);
     });
    }
 
-  public void literallyAnything(){
-    motor.set(1.0);
+  public void literallyAnything(double speed){
+    motor.set(speed);
   }
 
+ 
   public DriveSubsystem getDriveSubsystem() {
     return driveSubsystem;
   }
