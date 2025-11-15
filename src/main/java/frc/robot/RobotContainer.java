@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-
+//constants not added yet :(
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -12,10 +12,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.Launcher;
 
 
 /**
@@ -29,6 +31,8 @@ public class RobotContainer {
 
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
+  private final Launcher launcher = new Launcher();
+
   private final XboxController driveController = new XboxController(Constants.driverXboxControllerPort);
   
   private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
@@ -39,7 +43,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(
+    driveSubsystem.setDefaultCommand( 
             new RunCommand(
                     () -> {
                       driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
@@ -47,8 +51,19 @@ public class RobotContainer {
                     }
             , driveSubsystem)
     );
-  
-  }
+ 
+//tells motor to spin in the launcher hopefully.
+    
+    
+    launcher.setDefaultCommand(
+      new RunCommand(
+        () -> {
+          ((Launcher) launcher).motorSpin(
+          Constants.maxMotorOutput*operatorController.getLeftX());
+        }
+      , launcher)
+    );
+  }   
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by

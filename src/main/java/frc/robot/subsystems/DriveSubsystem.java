@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -22,6 +23,7 @@ public class DriveSubsystem extends SubsystemBase {
   WPI_TalonSRX rightFollower;
   DifferentialDrive drive;
   public DigitalInput limitSwitch;
+  public RunCommand setDefaultCommand;
   
 
   // DriveSubsystem contains all the code for what we want our DriveSubsystem to be
