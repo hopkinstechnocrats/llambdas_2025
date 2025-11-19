@@ -13,6 +13,14 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //PI
+    public static final double pi = 3.14;
+
+    //the speed that the butter systems can run
+    //UPDATE ME!!!!
+    public static final double butterIntakeTopSpeed = 0.3;
+    public static final double pullyHeight = 4;
+
     // The CAN ID is the device ID of each of the motors
     public static final int rightLeaderCANID = 6;
     public static final int rightFollowerCANID = 5;

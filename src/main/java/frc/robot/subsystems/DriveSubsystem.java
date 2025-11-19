@@ -55,7 +55,6 @@ public class DriveSubsystem extends SubsystemBase {
     leftLeader.setInverted(true);
     leftFollower.setInverted(true);
     
-    
   }
 
   // Create our drive command

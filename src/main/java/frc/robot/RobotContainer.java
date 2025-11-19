@@ -32,14 +32,14 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand(
-            new RunCommand(
-                    () -> {
-                      driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
-                      Constants.maxMotorOutput*driveController.getRightY());
-                    }
-            , driveSubsystem)
-    );
+  driveSubsystem.setDefaultCommand(
+    new RunCommand(
+      () -> {
+        driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
+        Constants.maxMotorOutput*driveController.getRightY());
+      }
+      , driveSubsystem)
+  );
   
   }
 
@@ -55,13 +55,10 @@ public class RobotContainer {
     JoystickButton aDriverButton = new JoystickButton(driveController, 1);
     JoystickButton bDriverButton = new JoystickButton(driveController, 2);
     
+    //write joystick driver here
+
   }
    
-  
-
-  public DriveSubsystem getDriveSubsystem() {
-    return driveSubsystem;
-  }
   
   
   /**
