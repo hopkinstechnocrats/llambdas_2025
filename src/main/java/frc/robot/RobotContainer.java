@@ -5,6 +5,8 @@
 package frc.robot;
 
 
+import java.security.interfaces.XECPublicKey;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -12,7 +14,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 
+import frc.robot.subsystems.ButterIntakeCommands;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,17 +53,20 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings(ButterIntakeCommands ButterIntakeCommands) {
     JoystickButton aButton = new JoystickButton(operatorController, 1);
     JoystickButton bButton = new JoystickButton(operatorController, 2);
     JoystickButton aDriverButton = new JoystickButton(driveController, 1);
     JoystickButton bDriverButton = new JoystickButton(driveController, 2);
     
+    XboxController controller1 = new XboxController(0);
     //write joystick driver here
+    
+    Command XboxController1.y().whileTrue(ButtterIntakeCommands.winchRaiseCommand(true));
+    Command XboxController1.a().whileTrue(ButtterIntakeCommands.winchRaiseCommand(false));
 
   }
-   
-  
+ 
   
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

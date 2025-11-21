@@ -19,30 +19,30 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 // This subsystem allows the grabber to grab
-
-public class ButterIntakeSubsystem {
+public class ButterIntakeSubsystem extends SubsystemBase{
     WPI_TalonSRX intakeMotor;
-    WPI_TalonSRX pullyMotor;
+    WPI_TalonSRX winchMotor; 
 
-    public boolean isPullyRaised = false;
+    public boolean isWinchRaised = false;
+    public boolean isWinchWorking = false;
 
     public ButterIntakeSubsystem(){
         //Initilize motors // update the channels pretty pleeassse!! :)
-        intakeMotor = new WPI_TalonSRX(0);
-        pullyMotor = new WPI_TalonSRX(0);
+        intakeMotor = new WPI_TalonSRX(0);  //TODO: update this
+        winchMotor = new WPI_TalonSRX(0); //TODO: update the device number
 
         //put motors to default settings
         intakeMotor.configFactoryDefault();
-        pullyMotor.configFactoryDefault();
+        winchMotor.configFactoryDefault();
         
         //Make the motors brake unless they're doing something else
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-        pullyMotor.setNeutralMode(NeutralMode.Brake);
+        winchMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void setMotorPosition(double positionRadian, WPI_TalonSRX motor ){
+    public void setGenericMotorPosition(double positionRadian, WPI_TalonSRX motor ){
         //Spins the motor a number of radians.
-        double motorSpeed = 3.0;
+        double motorSpeed = 0.3;//TODO: update this and/ or make it into a constant :)
         if(positionRadian < 0){
             motorSpeed *= -1;
         }
@@ -61,15 +61,17 @@ public class ButterIntakeSubsystem {
         return;
     }
 
-    public void runButterPully(boolean isBeingRaised){
-        if(isBeingRaised == isPullyRaised){
+    public void runButterWinch(boolean isBeingRaised){
+        if(isBeingRaised == isWinchRaised || isWinchWorking){
             return;
         }
+        isWinchWorking = true;
         if(isBeingRaised){
-            setMotorPosition(Constants.pullyHeight, pullyMotor);
+            setGenericMotorPosition(Constants.pullyHeight, winchMotor);
         }
         else{
-            setMotorPosition(-1*Constants.pullyHeight, pullyMotor);
+            setGenericMotorPosition(-1*Constants.pullyHeight, winchMotor);
         }
+        isWinchWorking = false;
     }
 }

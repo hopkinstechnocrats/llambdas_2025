@@ -20,7 +20,7 @@ public class DriveSubsystem extends SubsystemBase {
   WPI_TalonSRX leftFollower;
   WPI_TalonSRX rightLeader;
   WPI_TalonSRX rightFollower;
-  DifferentialDrive drive;
+  static DifferentialDrive drive;
   public DigitalInput limitSwitch;
   
 
@@ -58,7 +58,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   // Create our drive command
-  public void drive(double left, double right) {
+  public static void drive(double left, double right) {
     //Tell our drive command to act as a tank drive. Other valid option is Arcade drive
     drive.tankDrive(left, right);
     /*
