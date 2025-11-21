@@ -4,20 +4,18 @@
 
 package frc.robot;
 
-//constants not added yet :(
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import commands.launcherCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.subsystems.Launcher;
+import edu.wpi.first.wpilibj2.command.Command;
 
 
 /**
@@ -28,22 +26,19 @@ import frc.robot.subsystems.Launcher;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-  private final Launcher launcher = new Launcher();
+  private final Launcher launcherSubsystem = new Launcher();
 
-  private final XboxController driveController = new XboxController(Constants.driverXboxControllerPort);
+  private final CommandXboxController driveController = new CommandXboxController(Constants.driverXboxControllerPort);
   
-  private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
-
-  WPI_TalonSRX motor = new WPI_TalonSRX(10);
+  private final CommandXboxController operatorController = new CommandXboxController(Constants.operatorXboxControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    driveSubsystem.setDefaultCommand( 
+    driveSubsystem.setDefaultCommand(
             new RunCommand(
                     () -> {
                       driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
@@ -51,19 +46,15 @@ public class RobotContainer {
                     }
             , driveSubsystem)
     );
- 
-//tells motor to spin in the launcher hopefully.
-    
-    
-    launcher.setDefaultCommand(
+
+    launcherSubsystem.setDefaultCommand(
       new RunCommand(
         () -> {
-          ((Launcher) launcher).motorSpin(
-          Constants.maxMotorOutput*operatorController.getLeftX());
-        }
-      , launcher)
+          launcherSubsystem.motorSpin(0);
+        }, launcherSubsystem)
     );
-  }   
+  
+  }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -72,25 +63,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton aButton = new JoystickButton(operatorController, 1);
-    JoystickButton bButton = new JoystickButton(operatorController, 2);
-    JoystickButton aDriverButton = new JoystickButton(driveController, 1);
-    JoystickButton bDriverButton = new JoystickButton(driveController, 2);
-    
-    aButton.whileTrue(commandify(1.0)).onFalse(commandify(0.0));
-    bButton.whileTrue(commandify(-1.0)).onFalse(commandify(0.0));
+     operatorController.a().whileTrue(launcherCommands.spinLauncher(launcherSubsystem, 0.05));
   }
-   public Command commandify(double speed){
-    return Commands.run( () -> {
-      literallyAnything(speed);
-    });
-   }
+   
+   
 
-  public void literallyAnything(double speed){
-    motor.set(speed);
-  }
-
- 
   public DriveSubsystem getDriveSubsystem() {
     return driveSubsystem;
   }
