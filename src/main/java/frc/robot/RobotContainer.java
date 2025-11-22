@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.subsystems.ButterIntakeCommands;
+import frc.robot.subsystems.ButterIntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -36,7 +37,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-  driveSubsystem.setDefaultCommand(
+    driveSubsystem.setDefaultCommand(
     new RunCommand(
       () -> {
         driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
@@ -45,8 +46,6 @@ public class RobotContainer {
       , driveSubsystem)
   );
   
-  }
-
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -59,12 +58,20 @@ public class RobotContainer {
     JoystickButton aDriverButton = new JoystickButton(driveController, 1);
     JoystickButton bDriverButton = new JoystickButton(driveController, 2);
     
-    XboxController controller1 = new XboxController(0);
     //write joystick driver here
     
-    Command XboxController1.y().whileTrue(ButtterIntakeCommands.winchRaiseCommand(true));
-    Command XboxController1.a().whileTrue(ButtterIntakeCommands.winchRaiseCommand(false));
+    //winchCode
+    operatorController.y().onTrue(ButtterIntakeCommands.winchRaiseCommand(true));
+    operatorController.a().onTrue(ButtterIntakeCommands.winchRaiseCommand(false));
+    
+    //Butter intake code
+    operatorController.b().whileTrue(ButtterIntakeCommands.butterIntakeCommand(true))
+        .onFalse(ButterIntakeCommands.stopMotor(ButterIntakeSubsystem.intakeMotor));
 
+    operatorController.x().whileTrue(ButtterIntakeCommands.butterIntakeCommand(false))
+        .onFalse(ButterIntakeCommands.stopMotor(ButterIntakeSubsystem.intakeMotor));
+
+    //TODO: Test this load of garbage to make sure that the motor stops when the button isn't being pressed
   }
  
   

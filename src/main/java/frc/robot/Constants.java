@@ -13,13 +13,20 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    //TODO: update all variables ending in CANID
+    //IntakeSubsystem Constants
+    public static final int intakeMotorCANID = 10;
+    public static final int winchMotorCANID = 11;
+    public static final double winchMotorTopSpeed = 0.3;
+
     //PI
     public static final double pi = 3.14;
 
     //the speed that the butter systems can run
     //UPDATE ME!!!!
     public static final double butterIntakeTopSpeed = 0.3;
-    public static final double pullyHeight = 4;
+    public static final double pullyLowerTime = -0.5;
+    public static final double pullyRaiseTime = 0.5;
 
     // The CAN ID is the device ID of each of the motors
     public static final int rightLeaderCANID = 6;

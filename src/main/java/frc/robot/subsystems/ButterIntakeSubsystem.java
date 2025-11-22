@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
-// This subsystem allows the grabber to grab
+
+
 public class ButterIntakeSubsystem extends SubsystemBase{
     WPI_TalonSRX intakeMotor;
     WPI_TalonSRX winchMotor; 
@@ -28,8 +29,8 @@ public class ButterIntakeSubsystem extends SubsystemBase{
 
     public ButterIntakeSubsystem(){
         //Initilize motors // update the channels pretty pleeassse!! :)
-        intakeMotor = new WPI_TalonSRX(0);  //TODO: update this
-        winchMotor = new WPI_TalonSRX(0); //TODO: update the device number
+        intakeMotor = new WPI_TalonSRX(Constants.intakeMotorCANID);  //TODO: update this
+        winchMotor = new WPI_TalonSRX(Constants.winchMotorCANID); //TODO: update the device number
 
         //put motors to default settings
         intakeMotor.configFactoryDefault();
@@ -40,14 +41,17 @@ public class ButterIntakeSubsystem extends SubsystemBase{
         winchMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void setGenericMotorPosition(double positionRadian, WPI_TalonSRX motor ){
+    public void setButterWinchPosition(double raiseTimeSeconds, WPI_TalonSRX motor ){
         //Spins the motor a number of radians.
-        double motorSpeed = 0.3;//TODO: update this and/ or make it into a constant :)
-        if(positionRadian < 0){
+        double motorSpeed = Constants.winchMotorTopSpeed;
+	//TODO: Update the value of motorSpeed (possibly make it negative depending on the wiring)
+        if(raiseTimeSeconds < 0){
             motorSpeed *= -1;
+	    raiseTimeSeconds *= -1;
+	    //Negative time doesn't make much sense...
         }
         motor.set(motorSpeed);
-        motor.setExpiration(positionRadian);
+        motor.setExpiration(raiseTimeSeconds);
         return;
     }
 
@@ -63,14 +67,16 @@ public class ButterIntakeSubsystem extends SubsystemBase{
 
     public void runButterWinch(boolean isBeingRaised){
         if(isBeingRaised == isWinchRaised || isWinchWorking){
+            //In the event that the winch is already raised or in the middle of being raised
+            //      Don't do anything.
             return;
         }
         isWinchWorking = true;
         if(isBeingRaised){
-            setGenericMotorPosition(Constants.pullyHeight, winchMotor);
+            setButterWinchPosition(Constants.pullyRaiseTime, winchMotor);
         }
         else{
-            setGenericMotorPosition(-1*Constants.pullyHeight, winchMotor);
+            setButterWinchPosition(Constants.pullyLowerTime, winchMotor);
         }
         isWinchWorking = false;
     }
