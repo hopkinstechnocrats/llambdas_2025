@@ -11,12 +11,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.PopcornCommands;
+import frc.robot.subsystems.PopcornSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.subsystems.ButterIntakeCommands;
+import frc.robot.subsystems.PopcornSubsystem;
 import frc.robot.subsystems.ButterIntakeSubsystem;
 
 /**
@@ -29,49 +33,62 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-  private final XboxController driveController = new XboxController(Constants.driverXboxControllerPort);
+  private final ButterIntakeSubsystem  butterIntakeSubsystem = new ButterIntakeSubsystem();
+  private final PopcornSubsystem  popcornSubsystem = new PopcornSubsystem();
+
+  private final CommandXboxController driveController = new CommandXboxController(Constants.driverXboxControllerPort);
   
-  private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
+  private final CommandXboxController operatorController = new CommandXboxController(Constants.operatorXboxControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(
-    new RunCommand(
-      () -> {
-        driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
-        Constants.maxMotorOutput*driveController.getRightY());
-      }
-      , driveSubsystem)
-  );
-  
-  /**
+      new RunCommand(
+        () -> {
+          driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
+          Constants.maxMotorOutput*driveController.getRightY());
+        }
+        , driveSubsystem)
+        );  
+
+    butterIntakeSubsystem.setDefaultCommand(
+      new RunCommand(() -> {
+        butterIntakeSubsystem.runWinch(0);
+      }, butterIntakeSubsystem)
+    );
+
+    popcornSubsystem.setDefaultCommand(
+      new RunCommand(() -> {
+        popcornSubsystem.stopLauncherMotors();
+      }, popcornSubsystem)
+    );
+  }
+        /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings(ButterIntakeCommands ButterIntakeCommands) {
-    JoystickButton aButton = new JoystickButton(operatorController, 1);
-    JoystickButton bButton = new JoystickButton(operatorController, 2);
-    JoystickButton aDriverButton = new JoystickButton(driveController, 1);
-    JoystickButton bDriverButton = new JoystickButton(driveController, 2);
+  private void configureButtonBindings() {
     
     //write joystick driver here
     
     //winchCode
-    operatorController.y().onTrue(ButtterIntakeCommands.winchRaiseCommand(true));
-    operatorController.a().onTrue(ButtterIntakeCommands.winchRaiseCommand(false));
+    operatorController.y().onTrue(ButterIntakeCommands.winchRaiseCommand(true, butterIntakeSubsystem));
+    operatorController.a().onTrue(ButterIntakeCommands.winchRaiseCommand(false, butterIntakeSubsystem));
     
     //Butter intake code
-    operatorController.b().whileTrue(ButtterIntakeCommands.butterIntakeCommand(true))
-        .onFalse(ButterIntakeCommands.stopMotor(ButterIntakeSubsystem.intakeMotor));
+    operatorController.b().whileTrue(ButterIntakeCommands.butterIntakeCommand(-Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
-    operatorController.x().whileTrue(ButtterIntakeCommands.butterIntakeCommand(false))
-        .onFalse(ButterIntakeCommands.stopMotor(ButterIntakeSubsystem.intakeMotor));
+    operatorController.x().whileTrue(ButterIntakeCommands.butterIntakeCommand(Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
     //TODO: Test this load of garbage to make sure that the motor stops when the button isn't being pressed
+    
+    //
+    operatorController.rightBumper().whileTrue(PopcornCommands.launchPopcornCommand( popcornSubsystem));
+
   }
  
   

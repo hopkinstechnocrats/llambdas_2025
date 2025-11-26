@@ -55,14 +55,12 @@ public class ButterIntakeSubsystem extends SubsystemBase{
         return;
     }
 
-    public void runButterIntake(boolean intake){
-        //intake dictates if the Butter is going in or not.\
-        double motorSpeed = Constants.butterIntakeTopSpeed;
-        if(!intake){
-            motorSpeed *= -1;
-        }
-        intakeMotor.set(motorSpeed);
-        return;
+    public void runWinch(double speed){
+        winchMotor.set(speed);
+    }
+
+    public void runbutterIntake(double speed){
+        intakeMotor.set(speed);
     }
 
     public void runButterWinch(boolean isBeingRaised){

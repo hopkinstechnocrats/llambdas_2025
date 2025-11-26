@@ -14,12 +14,20 @@ package frc.robot;
  */
 public final class Constants {
     //TODO: update all variables ending in CANID
+
+    //Popcorn Constants
+    public static final double accelerationMotorTopSpeed = 1.0;
+    public static final double loadingMotorTopSpeed = 0.1;
+    public static final int popcornAcceleratorCANID = 0; //TODO: Put in the CANID's
+    public static final int popcornLoaderCANID = 0; //TODO: Put in the CANID's
+
+
     //IntakeSubsystem Constants
-    public static final int intakeMotorCANID = 10;
-    public static final int winchMotorCANID = 11;
+    public static final int intakeMotorCANID = 11;
+    public static final int winchMotorCANID = 10;
     public static final double winchMotorTopSpeed = 0.3;
 
-    //PI
+    //PI be like...
     public static final double pi = 3.14;
 
     //the speed that the butter systems can run
@@ -29,10 +37,10 @@ public final class Constants {
     public static final double pullyRaiseTime = 0.5;
 
     // The CAN ID is the device ID of each of the motors
-    public static final int rightLeaderCANID = 6;
-    public static final int rightFollowerCANID = 5;
-    public static final int leftLeaderCANID = 7;
-    public static final int leftFollowerCANID = 8;
+    public static final int rightLeaderCANID = 8;
+    public static final int rightFollowerCANID = 7;
+    public static final int leftLeaderCANID = 5;
+    public static final int leftFollowerCANID = 6;
     //The controller ports can be changed in driverstation
     public static final int driverXboxControllerPort = 0;
     public static final int operatorXboxControllerPort = 1;
