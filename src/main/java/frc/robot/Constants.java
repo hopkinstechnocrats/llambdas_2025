@@ -18,8 +18,8 @@ public final class Constants {
     //Popcorn Constants
     public static final double accelerationMotorTopSpeed = 1.0;
     public static final double loadingMotorTopSpeed = 0.1;
-    public static final int popcornAcceleratorCANID = 0; //TODO: Put in the CANID's
-    public static final int popcornLoaderCANID = 0; //TODO: Put in the CANID's
+    public static final int popcornAcceleratorCANID = 55; //TODO: Put in the CANID's
+    public static final int popcornLoaderCANID = 21; //TODO: Put in the CANID's
 
 
     //IntakeSubsystem Constants
