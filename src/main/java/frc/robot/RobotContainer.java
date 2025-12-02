@@ -55,13 +55,13 @@ public class RobotContainer {
 
     butterIntakeSubsystem.setDefaultCommand(
       new RunCommand(() -> {
-        butterIntakeSubsystem.runWinch(0);
+        butterIntakeSubsystem.runButterIntake(0);
       }, butterIntakeSubsystem)
     );
 
     popcornSubsystem.setDefaultCommand(
       new RunCommand(() -> {
-        popcornSubsystem.stopLauncherMotors();
+        popcornSubsystem.setLauncherSpeed(0.0 , 0.0);
       }, popcornSubsystem)
     );
   }
@@ -86,7 +86,6 @@ public class RobotContainer {
 
     //TODO: Test this load of garbage to make sure that the motor stops when the button isn't being pressed
     
-    //
     operatorController.rightBumper().whileTrue(PopcornCommands.launchPopcornCommand( popcornSubsystem));
 
   }

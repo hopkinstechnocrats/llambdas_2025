@@ -12,18 +12,19 @@ public class PopcornSubsystem extends SubsystemBase{
     static WPI_TalonSRX loadingMotor;
 
     public PopcornSubsystem(){
-        accelerationMotor = new WPI_TalonSRX(0); // Find CANID
+        accelerationMotor = new WPI_TalonSRX(Constants.popcornAcceleratorCANID); // Find real CANID 
+        loadingMotor = new WPI_TalonSRX(Constants.popcornLoaderCANID); // TODO: Find real CANID
+ 
         accelerationMotor.configFactoryDefault();
+        loadingMotor.configFactoryDefault();
+	
         accelerationMotor.setNeutralMode(NeutralMode.Brake);
+        loadingMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public static void launchPopcorn(){
-        accelerationMotor.set(Constants.accelerationMotorTopSpeed);
-        loadingMotor.set(Constants.loadingMotorTopSpeed);
+    public static void setLauncherSpeed(double acceleratorSpeed , double launcherSpeed){
+        accelerationMotor.set(acceleratorSpeed);
+        loadingMotor.set(launcherSpeed);
     }
 
-    public static void stopLauncherMotors(){
-        accelerationMotor.set(0);
-        loadingMotor.set(0);
-    }
 }

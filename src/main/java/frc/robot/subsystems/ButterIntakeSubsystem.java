@@ -41,15 +41,10 @@ public class ButterIntakeSubsystem extends SubsystemBase{
         winchMotor.setNeutralMode(NeutralMode.Brake);
     }
 
-    public void setButterWinchPosition(double raiseTimeSeconds, WPI_TalonSRX motor ){
-        //Spins the motor a number of radians.
-        double motorSpeed = Constants.winchMotorTopSpeed;
+    public void setButterWinchPosition(double raiseTimeSeconds, double motorSpeed , WPI_TalonSRX motor ){
+        //Spins the motor for a certin amount of time.
 	//TODO: Update the value of motorSpeed (possibly make it negative depending on the wiring)
-        if(raiseTimeSeconds < 0){
-            motorSpeed *= -1;
-	    raiseTimeSeconds *= -1;
-	    //Negative time doesn't make much sense...
-        }
+        
         motor.set(motorSpeed);
         motor.setExpiration(raiseTimeSeconds);
         return;
@@ -71,10 +66,10 @@ public class ButterIntakeSubsystem extends SubsystemBase{
         }
         isWinchWorking = true;
         if(isBeingRaised){
-            setButterWinchPosition(Constants.pullyRaiseTime, winchMotor);
+            setButterWinchPosition(Constants.pullyRaiseTime, -Constants.winchMotorTopSpeed, winchMotor);
         }
         else{
-            setButterWinchPosition(Constants.pullyLowerTime, winchMotor);
+            setButterWinchPosition(Constants.pullyLowerTime, Constants.winchMotorTopSpeed, winchMotor);
         }
         isWinchWorking = false;
     }
