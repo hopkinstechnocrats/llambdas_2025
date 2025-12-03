@@ -18,8 +18,8 @@ import frc.robot.subsystems.DriveSubsystem;
 // import frc.robot.subsystems.PopcornSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.ArmCommands;
-import frc.robot.subsystems.ArmSubsystem;
+// import frc.robot.subsystems.ArmCommands;
+// import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ButterIntakeCommands;
 // import frc.robot.subsystems.PopcornSubsystem;
 import frc.robot.subsystems.ButterIntakeSubsystem;
@@ -33,7 +33,7 @@ import frc.robot.subsystems.ButterIntakeSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
-  private final ArmSubsystem armSubsystem = new ArmSubsystem();
+  // private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
   private final ButterIntakeSubsystem  butterIntakeSubsystem = new ButterIntakeSubsystem();
   // private final PopcornSubsystem  popcornSubsystem = new PopcornSubsystem();
@@ -89,8 +89,8 @@ public class RobotContainer {
 
 
     // //winchCode
-    // operatorController.y().onTrue(ButterIntakeCommands.winchRaiseCommand(true, butterIntakeSubsystem));
-    // operatorController.a().onTrue(ButterIntakeCommands.winchRaiseCommand(false, butterIntakeSubsystem));
+    operatorController.y().onTrue(ButterIntakeCommands.winchRaiseCommand(true, butterIntakeSubsystem));
+    operatorController.a().onTrue(ButterIntakeCommands.winchRaiseCommand(false, butterIntakeSubsystem));
     
     // //Butter intake code
     // operatorController.b().whileTrue(ButterIntakeCommands.butterIntakeCommand(-Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
@@ -98,8 +98,8 @@ public class RobotContainer {
     // operatorController.x().whileTrue(ButterIntakeCommands.butterIntakeCommand(Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
 
-    operatorController.a().whileTrue(ArmCommands.armUp(armSubsystem));
-    operatorController.b().whileTrue(ArmCommands.armDown(armSubsystem));
+    // operatorController.a().whileTrue(ArmCommands.armUp(armSubsystem));
+    // operatorController.b().whileTrue(ArmCommands.armDown(armSubsystem));
     // operatorController.a().whileFalse(ArmCommands.armBrake(armSubsystem));   //TODO: conflicting a=true b=false
     // operatorController.b().whileFalse(ArmCommands.armBrake(armSubsystem));
 

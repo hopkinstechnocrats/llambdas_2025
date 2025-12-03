@@ -1,35 +1,35 @@
-package frc.robot.subsystems;
+// package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.Constants;
-import frc.robot.subsystems.ArmSubsystem;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import edu.wpi.first.wpilibj2.command.Commands;
+// import frc.robot.Constants;
+// import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmCommands extends Command {
+// public class ArmCommands extends Command {
 
-    public static Command armUp(ArmSubsystem arm) {
-        return Commands.run(
-          () -> {
-            arm.moveArm(Constants.armUpSpeed);
+//     public static Command armUp(ArmSubsystem arm) {
+//         return Commands.run(
+//           () -> {
+//             arm.moveArm(Constants.armUpSpeed);
             
-          },
-          arm);
-    }
+//           },
+//           arm);
+//     }
 
-    public static Command armDown(ArmSubsystem arm) {
-        return Commands.run(
-          () -> {
-            arm.moveArm(Constants.armDownSpeed);
-          },
-          arm);
-    }
+//     public static Command armDown(ArmSubsystem arm) {
+//         return Commands.run(
+//           () -> {
+//             arm.moveArm(Constants.armDownSpeed);
+//           },
+//           arm);
+//     }
 
-    public static Command armBrake(ArmSubsystem arm){
-        return Commands.run(
-            () -> {
-                arm.moveArm(Constants.armBrakeSpeed);
-            },
-            arm);
-    }
+//     public static Command armBrake(ArmSubsystem arm){
+//         return Commands.run(
+//             () -> {
+//                 arm.moveArm(Constants.armBrakeSpeed);
+//             },
+//             arm);
+//     }
 
-}
+// }
