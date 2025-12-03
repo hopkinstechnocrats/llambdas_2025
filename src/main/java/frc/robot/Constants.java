@@ -23,9 +23,9 @@ public final class Constants {
 
 
     //IntakeSubsystem Constants
-    public static final int intakeMotorCANID = 11;
-    public static final int winchMotorCANID = 10;
-    public static final double winchMotorTopSpeed = 1.0;
+    public static final int intakeMotorCANID = 10;
+    public static final int winchMotorCANID = 11;
+    public static final double winchMotorTopSpeed = .2;
 
     //PI be like...
     public static final double pi = 3.14;
@@ -52,5 +52,14 @@ public final class Constants {
     public static final double maxMotorOutput = -0.55;
 
     //butter intake
+
+
+
+
+    //Tate stuff
+    public static final double armSpeed = .1;
+    public static final double armUpSpeed = -.25;
+    public static final double armDownSpeed = .25;
+    public static final double armBrakeSpeed = -.05;
     
 }
