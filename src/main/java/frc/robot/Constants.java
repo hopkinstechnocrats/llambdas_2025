@@ -23,7 +23,7 @@ public final class Constants {
 
 
     //IntakeSubsystem Constants
-    public static final int intakeMotorCANID = 11;
+    public static final int intakeMotorCANID = 12;
     public static final int winchMotorCANID = 10;
     public static final double winchMotorTopSpeed = 1.0;
 

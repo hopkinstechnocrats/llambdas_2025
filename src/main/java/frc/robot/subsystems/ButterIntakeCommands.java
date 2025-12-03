@@ -17,10 +17,10 @@ public static Command stopMotor(ButterIntakeSubsystem butterIntakeSubsystem){
   }, butterIntakeSubsystem);
 };
 
-public static Command butterIntakeCommand(double speed , ButterIntakeSubsystem butterIntakeSubsystem){
+public static Command butterIntakeCommand(double speed , ButterIntakeSubsystem babutterIntakeSubsystem){
   return Commands.run( ()->{
-    butterIntakeSubsystem.runButterIntake(speed);
-  },butterIntakeSubsystem);
+    babutterIntakeSubsystem.runButterIntake(speed);
+  },babutterIntakeSubsystem);
 }
 
     public static Command setWinchSpeedCommand(double speed, ButterIntakeSubsystem bbbutterIntakeSubsystem){

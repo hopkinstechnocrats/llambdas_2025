@@ -30,7 +30,7 @@ public class ButterIntakeSubsystem extends SubsystemBase{
     public ButterIntakeSubsystem(){
         //Initilize motors // update the channels pretty pleeassse!! :)
         intakeMotor = new WPI_TalonSRX(Constants.intakeMotorCANID); 
-        winchMotor = new WPI_TalonSRX(Constants.winchMotorCANID); 
+        winchMotor = new WPI_TalonSRX(Constants.winchMotorCANID); //good
 
         //put motors to default settings
         intakeMotor.configFactoryDefault();
