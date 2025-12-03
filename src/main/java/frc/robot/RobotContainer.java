@@ -5,18 +5,23 @@
 package frc.robot;
 
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import java.security.interfaces.XECPublicKey;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
+// import frc.robot.subsystems.PopcornCommands;
+// import frc.robot.subsystems.PopcornSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
+import frc.robot.subsystems.ButterIntakeCommands;
+// import frc.robot.subsystems.PopcornSubsystem;
+import frc.robot.subsystems.ButterIntakeSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,60 +31,65 @@ import edu.wpi.first.wpilibj2.command.Commands;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-
   private final DriveSubsystem driveSubsystem = new DriveSubsystem();
 
-  private final XboxController driveController = new XboxController(Constants.driverXboxControllerPort);
-  
-  private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
+  private final ButterIntakeSubsystem  butterIntakeSubsystem = new ButterIntakeSubsystem();
+  // private final PopcornSubsystem  popcornSubsystem = new PopcornSubsystem();
 
-  WPI_TalonSRX motor = new WPI_TalonSRX(10);
+  private final CommandXboxController driveController = new CommandXboxController(Constants.driverXboxControllerPort);
+  
+  private final CommandXboxController operatorController = new CommandXboxController(Constants.operatorXboxControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(
-            new RunCommand(
-                    () -> {
-                      driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
-                      Constants.maxMotorOutput*driveController.getRightY());
-                    }
-            , driveSubsystem)
-    );
-  
-  }
+      new RunCommand(
+        () -> {
+          driveSubsystem.drive(Constants.maxMotorOutput*driveController.getLeftY(),
+          Constants.maxMotorOutput*driveController.getRightY());
+        }
+        , driveSubsystem)
+        );  
 
-  /**
+    butterIntakeSubsystem.setDefaultCommand(
+      new RunCommand(() -> {
+        butterIntakeSubsystem.runButterIntake(0);
+      }, butterIntakeSubsystem)
+    );
+
+    // popcornSubsystem.setDefaultCommand(
+    //   new RunCommand(() -> {
+    //     popcornSubsystem.setLauncherSpeed(0.0 , 0.0);
+    //   }, popcornSubsystem)
+    // );
+  }
+        /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    JoystickButton aButton = new JoystickButton(operatorController, 1);
-    JoystickButton bButton = new JoystickButton(operatorController, 2);
-    JoystickButton aDriverButton = new JoystickButton(driveController, 1);
-    JoystickButton bDriverButton = new JoystickButton(driveController, 2);
     
-    aButton.whileTrue(commandify(1.0)).onFalse(commandify(0.0));
-    bButton.whileTrue(commandify(-1.0)).onFalse(commandify(0.0));
-  }
-   public Command commandify(double speed){
-    return Commands.run( () -> {
-      literallyAnything(speed);
-    });
-   }
+    //write joystick driver here
+    
+    //winchCode
+    operatorController.y().onTrue(ButterIntakeCommands.winchRaiseCommand(true, butterIntakeSubsystem));
+    operatorController.a().onTrue(ButterIntakeCommands.winchRaiseCommand(false, butterIntakeSubsystem));
+    
+    //Butter intake code
+    operatorController.b().whileTrue(ButterIntakeCommands.butterIntakeCommand(-Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
-  public void literallyAnything(double speed){
-    motor.set(speed);
-  }
+    operatorController.x().whileTrue(ButterIntakeCommands.butterIntakeCommand(Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
+    //TODO: Test this load of garbage to make sure that the motor stops when the button isn't being pressed
+    
+    // operatorController.rightBumper().whileTrue(PopcornCommands.launchPopcornCommand( popcornSubsystem));
+
+  }
  
-  public DriveSubsystem getDriveSubsystem() {
-    return driveSubsystem;
-  }
-  
   
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
