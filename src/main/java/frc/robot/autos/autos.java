@@ -14,7 +14,7 @@ public class autos {
 
     public Command rotateClockwise90 = DriveCommands.drive(driveSubsystem, -1, 1).withTimeout(0.5);
     public Command rotateCounterClockwise90 = DriveCommands.drive(driveSubsystem, 1, -1).withTimeout(0.5);
-    public Command moveForward(double time) {return DriveCommands.drive(driveSubsystem, 1, 1).withTimeout(1);};
+    public Command moveForward(double time) {return DriveCommands.drive(driveSubsystem, 1, 1).withTimeout(time);};
     
     //add launch mechanism.
 
@@ -32,6 +32,7 @@ public class autos {
     public Command selectAuto(){
         autochooser.setDefaultOption("Red side", auto_turnLeft_straight);
         autochooser.addOption("Blue side", auto_turnRight_straight );
+        autochooser.addOption("Forward", moveForward(1));
         
         return autochooser.getSelected();
     }
