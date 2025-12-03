@@ -25,7 +25,7 @@ public final class Constants {
     //IntakeSubsystem Constants
     public static final int intakeMotorCANID = 11;
     public static final int winchMotorCANID = 10;
-    public static final double winchMotorTopSpeed = 0.3;
+    public static final double winchMotorTopSpeed = 1.0;
 
     //PI be like...
     public static final double pi = 3.14;
@@ -33,8 +33,8 @@ public final class Constants {
     //the speed that the butter systems can run
     //UPDATE ME!!!!
     public static final double butterIntakeTopSpeed = 0.6;
-    public static final double pullyLowerTime = -0.5;
-    public static final double pullyRaiseTime = 0.5;
+    public static final double pullyLowerTime = 1;
+    public static final double pullyRaiseTime = 1;
 
     // The CAN ID is the device ID of each sof the motors
     public static final int rightLeaderCANID = 8;

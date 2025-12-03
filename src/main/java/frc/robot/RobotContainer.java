@@ -56,6 +56,8 @@ public class RobotContainer {
     butterIntakeSubsystem.setDefaultCommand(
       new RunCommand(() -> {
         butterIntakeSubsystem.runButterIntake(0);
+        butterIntakeSubsystem.runWinch(0);
+
       }, butterIntakeSubsystem)
     );
 
