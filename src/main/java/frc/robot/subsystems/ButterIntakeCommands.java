@@ -22,4 +22,10 @@ public static Command butterIntakeCommand(double speed , ButterIntakeSubsystem b
     butterIntakeSubsystem.runButterIntake(speed);
   },butterIntakeSubsystem);
 }
+
+    public static Command setWinchSpeedCommand(double speed, ButterIntakeSubsystem bbbutterIntakeSubsystem){
+  return Commands.run( ()->{
+    bbbutterIntakeSubsystem.runWinch(speed);
+  },bbbutterIntakeSubsystem);
+};
 }

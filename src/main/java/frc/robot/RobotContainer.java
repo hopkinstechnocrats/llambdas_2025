@@ -78,8 +78,8 @@ public class RobotContainer {
     //write joystick driver here
     
     //winchCode
-    operatorController.y().onTrue(ButterIntakeCommands.winchRaiseCommand(true, butterIntakeSubsystem));
-    operatorController.a().onTrue(ButterIntakeCommands.winchRaiseCommand(false, butterIntakeSubsystem));
+    operatorController.y().whileTrue(ButterIntakeCommands.setWinchSpeedCommand(-Constants.winchMotorTopSpeed, butterIntakeSubsystem));
+    operatorController.a().whileTrue(ButterIntakeCommands.setWinchSpeedCommand(Constants.winchMotorTopSpeed, butterIntakeSubsystem));
     
     //Butter intake code
     operatorController.b().whileTrue(ButterIntakeCommands.butterIntakeCommand(-Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
