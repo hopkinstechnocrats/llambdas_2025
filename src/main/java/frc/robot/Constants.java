@@ -23,16 +23,16 @@ public final class Constants {
 
 
     //IntakeSubsystem Constants
-    public static final int intakeMotorCANID = 12;
+    public static final int intakeMotorCANID = 11;
     public static final int winchMotorCANID = 10;
-    public static final double winchMotorTopSpeed = 1.0;
+    public static final double winchMotorTopSpeed = 0.3; //was 1
+    public static final double butterIntakeTopSpeed = 0.3;    //was .6
 
     //PI be like...
     public static final double pi = 3.14;
 
     //the speed that the butter systems can run
     //UPDATE ME!!!!
-    public static final double butterIntakeTopSpeed = 0.6;
     public static final double pullyLowerTime = 1;
     public static final double pullyRaiseTime = 1;
 
