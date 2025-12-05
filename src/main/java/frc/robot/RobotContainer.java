@@ -83,7 +83,6 @@ public class RobotContainer {
     
     //Butter intake code
     operatorController.b().whileTrue(ButterIntakeCommands.butterIntakeCommand(Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
-
     operatorController.x().whileTrue(ButterIntakeCommands.butterIntakeCommand(-Constants.butterIntakeTopSpeed, butterIntakeSubsystem));
 
     //TODO: Test this load of garbage to make sure that the motor stops when the button isn't being pressed
