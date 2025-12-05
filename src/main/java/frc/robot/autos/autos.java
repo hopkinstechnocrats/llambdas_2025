@@ -28,12 +28,4 @@ public class autos {
     public Command auto_turnLeft_straight = new SequentialCommandGroup(
         DriveCommands.drive(driveSubsystem, 1, -1).withTimeout(0.5),
         DriveCommands.drive(driveSubsystem, 1, 1).withTimeout(1));
-
-    public Command selectAuto(){
-        autochooser.setDefaultOption("Red side", auto_turnLeft_straight);
-        autochooser.addOption("Blue side", auto_turnRight_straight );
-        autochooser.addOption("Forward", moveForward(1));
-        
-        return autochooser.getSelected();
-    }
 }

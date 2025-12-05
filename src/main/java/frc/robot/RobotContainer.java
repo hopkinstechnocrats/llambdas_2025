@@ -10,12 +10,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.autos.autos;
+import frc.robot.autos.autos.*;
 
 
 /**
@@ -33,11 +36,24 @@ public class RobotContainer {
   
   private final XboxController operatorController = new XboxController(Constants.operatorXboxControllerPort);
 
+  private final autos m_autos = new autos();
+
+
   WPI_TalonSRX motor = new WPI_TalonSRX(10);
+
+  private SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+
+
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
+
+    m_autoChooser.setDefaultOption("Red side", m_autos.auto_turnLeft_straight);
+    m_autoChooser.addOption("Blue side", m_autos.auto_turnRight_straight);
+    m_autoChooser.addOption("Forward", m_autos.moveForward(1));
+
     configureButtonBindings();
     driveSubsystem.setDefaultCommand(
             new RunCommand(
@@ -88,8 +104,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new SequentialCommandGroup(
-      //put commands here
-    );
+    return m_autoChooser.getSelected();
   }
 }
